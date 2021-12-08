@@ -14,7 +14,7 @@ Rapid deployment
 ```sh
 # Test environment can be used, external data is recommended for production environment
 git clone --depth=1 https://github.com/davidix/jumpserver-docker.git
-cd Dockerfile
+cd jumpserver-docker
 cp config_example.conf .env
 docker-compose -f docker-compose-redis.yml -f docker-compose-mariadb.yml -f docker-compose.yml up
 ```
