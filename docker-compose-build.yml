@@ -137,7 +137,7 @@ services:
       args:
         Version: ${Version}
         TARGETARCH: ${TARGETARCH}
-    image: jumpserver/jms_nginx:${Version}
+   
     container_name: jms_nginx
     restart: always
     tty: true

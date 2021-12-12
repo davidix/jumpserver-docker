@@ -112,8 +112,11 @@ services:
     networks:
       - net
 
+
   nginx:
-    image: jumpserver/jms_nginx:${Version}
+    build: 
+      context: .
+      dockerfile: nginx/Dockerfile
     container_name: jms_nginx
     restart: always
     tty: true
@@ -135,6 +138,8 @@ services:
 
 volumes:
   core-data:
+    name: core-data
+    external: true
   koko-data:
   lion-data:
 

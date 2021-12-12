@@ -26,5 +26,7 @@ RUN set -ex \
     && rm -rf /var/lib/apt/lists/*
 
 COPY nginx/nginx.conf /etc/nginx/
+COPY nginx/static /opt/jumpserver/data/static
+
 
 CMD ["nginx", "-g", "daemon off;"]
