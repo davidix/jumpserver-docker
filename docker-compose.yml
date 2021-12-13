@@ -26,7 +26,7 @@ services:
       retries: 3
       start_period: 60s
     volumes:
-      - core-data:/opt/jumpserver/data
+      - ./core-data:/opt/jumpserver/data
     networks:
       - net
 
@@ -59,7 +59,7 @@ services:
       retries: 3
       start_period: 30s
     volumes:
-      - core-data:/opt/jumpserver/data
+      - ./core-data:/opt/jumpserver/data
     networks:
       - net
 
@@ -130,7 +130,7 @@ services:
       retries: 3
       start_period: 10s
     volumes:
-      - core-data:/opt/jumpserver/data
+      - ./core-data:/opt/jumpserver/data
     ports:
       - 80:80
     networks:
@@ -138,8 +138,6 @@ services:
 
 volumes:
   core-data:
-    name: core-data
-    external: true
   koko-data:
   lion-data:
 
