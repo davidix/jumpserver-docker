@@ -131,7 +131,7 @@ services:
       start_period: 10s
     volumes:
       - ./core-data:/opt/jumpserver/data
-      - ./ui-data-css:/opt/lina/assets/css
+      - ./ui-data:/opt/lina/assets
     ports:
       - 80:80
     networks:

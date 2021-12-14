@@ -40,8 +40,8 @@ RUN set -ex \
     && rm -rf ~/.cache/pip
 
 COPY core/entrypoint.sh .
-COPY nginx/static /opt/jumpserver/apps/static
-COPY nginx/david.txt /opt/
+#COPY nginx/static /opt/jumpserver/apps/static
+#COPY nginx/david.txt /opt/
 
 RUN chmod 755 ./entrypoint.sh
 
