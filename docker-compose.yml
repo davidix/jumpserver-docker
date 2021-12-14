@@ -83,7 +83,7 @@ services:
       retries: 3
       start_period: 10s
     volumes:
-      - koko-data:/opt/koko/data
+      - ./koko-data:/opt/koko/data
     ports:
       - 2222:2222
     networks:
@@ -108,7 +108,7 @@ services:
       retries: 3
       start_period: 10s
     volumes:
-      - lion-data:/opt/lion/data
+      - ./lion-data:/opt/lion/data
     networks:
       - net
 
@@ -131,6 +131,7 @@ services:
       start_period: 10s
     volumes:
       - ./core-data:/opt/jumpserver/data
+      - ./ui-data-css:/opt/lina/assets/css
     ports:
       - 80:80
     networks:
@@ -140,6 +141,7 @@ volumes:
   core-data:
   koko-data:
   lion-data:
+  ui-data-css:
 
 networks:
   net:
