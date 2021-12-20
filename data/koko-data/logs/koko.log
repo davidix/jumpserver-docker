@@ -1,0 +1,9 @@
+2021-12-13 21:40:16 [ERRO] Access key unauthorized, try to register new access key
+2021-12-13 22:45:53 [ERRO] Access key unauthorized, try to register new access key
+2021-12-14 15:44:21 [ERRO] Ws[f97e36e7-1fa5-40c5-a9e4-0661f9aac80c] read data err: websocket: close 1001 (going away)
+2021-12-18 19:38:29 [ERRO] Update terminal config failed: Get "http://core:8080/api/v1/terminal/terminals/config/": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2021-12-18 19:38:31 [ERRO] Post "http://core:8080/api/v1/terminal/terminals/status/": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2021-12-19 09:42:00 [ERRO] Access key unauthorized, try to register new access key
+2021-12-19 15:08:34 [ERRO] Access key unauthorized, try to register new access key
+2021-12-19 15:37:54 [ERRO] Access key unauthorized, try to register new access key
+2021-12-20 12:14:43 [ERRO] Post "http://core:8080/api/v1/terminal/terminals/status/": context deadline exceeded (Client.Timeout exceeded while awaiting headers)

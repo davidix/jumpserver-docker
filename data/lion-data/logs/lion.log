@@ -1,0 +1,2 @@
+2021-12-19 03:38:45 main main.go [ERROR] Post "http://core:8080/api/v1/terminal/terminals/status/": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2021-12-20 20:14:39 main main.go [ERROR] Post "http://core:8080/api/v1/terminal/terminals/status/": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
