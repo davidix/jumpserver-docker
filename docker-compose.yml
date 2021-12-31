@@ -132,6 +132,7 @@ services:
     volumes:
       - ./data/core-data:/opt/jumpserver/data
       - ./data/ui-data:/opt/lina/assets
+      - ./data/luna-data:/opt/luna
     ports:
       - 80:80
     networks:

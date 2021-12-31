@@ -3,3 +3,8 @@
 .env
 .history/
 core-data
+data
+data/lion-data/keys/.access_key
+*.log
+data/koko-data/keys/.access_key
+data/koko-data/logs/koko.log
