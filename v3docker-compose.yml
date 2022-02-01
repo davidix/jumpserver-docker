@@ -1,8 +1,14 @@
 version: '2.4'
 services:
   core:
-    image: jumpserver/jms_core:${Version}
-    container_name: jms_core
+    # build:
+    #   context: .
+    #   dockerfile: core/Dockerfile  
+    image: irpam_core:rbc1
+    container_name: irpam_core
+    depends_on:
+      mysql:
+        condition: service_healthy    
     restart: always
     tty: true
     command: start web
@@ -26,13 +32,15 @@ services:
       retries: 3
       start_period: 60s
     volumes:
-      - ./data/core-data:/opt/jumpserver/data:rw
+      - ${VOLUME_DIR}/core/data:/opt/jumpserver/data      
+      - ${VOLUME_DIR}/core/logs:/opt/jumpserver/logs      
+
     networks:
       - net
 
   celery:
-    image: jumpserver/jms_core:${Version}
-    container_name: jms_celery
+    image: irpam_core:rbc1
+    container_name: irpam_celery
     restart: always
     tty: true
     command: start task
@@ -59,19 +67,21 @@ services:
       retries: 3
       start_period: 30s
     volumes:
-      - ./data/core-data:/opt/jumpserver/data:rw
+      - ${VOLUME_DIR}/core/data:/opt/jumpserver/data
+      - ${VOLUME_DIR}/core/logs:/opt/jumpserver/logs      
+
     networks:
       - net
 
   koko:
-    image: jumpserver/jms_koko:${Version}
-    container_name: jms_koko
+    image: irpam_koko:rbc1
+    container_name: irpam_koko
     restart: always
     privileged: true
     tty: true
     environment:
       CORE_HOST: http://core:8080
-      BOOTSTRAP_TOKEN: $BOOTSTRAP_TOKEN
+      BOOTSTRAP_TOKEN: $BOOTSTRAP_TOKEN 
       LOG_LEVEL: $LOG_LEVEL
     depends_on:
       core:
@@ -82,18 +92,15 @@ services:
       timeout: 5s
       retries: 3
       start_period: 10s
-    volumes:
-      - ./data/koko-src/templates:/opt/koko/templates
-      - ./data/koko-src/static:/opt/koko/static
-      - ./data/koko-src/ui:/opt/koko/ui
+
     ports:
       - 2222:2222
     networks:
       - net
 
   lion:
-    image: jumpserver/jms_lion:${Version}
-    container_name: jms_lion
+    image: irpam_lion:rbc
+    container_name: irpam_lion
     restart: always
     tty: true
     environment:
@@ -109,17 +116,16 @@ services:
       timeout: 5s
       retries: 3
       start_period: 10s
-    volumes:
-      - ./data/lion-data:/opt/lion/data
     networks:
       - net
 
 
   nginx:
+    image: irpam_nginx:rbc_dix
     build: 
       context: .
       dockerfile: nginx/Dockerfile
-    container_name: jms_nginx
+    container_name: irpam_nginx
     restart: always
     tty: true
     depends_on:
@@ -132,11 +138,64 @@ services:
       retries: 3
       start_period: 10s
     volumes:
-      - ./data/core-data:/opt/jumpserver/data
-      - ./data/ui-data:/opt/lina
-      - ./data/luna-data:/opt/luna
+      - ${VOLUME_DIR}/core/data:/opt/jumpserver/data
+      - ${VOLUME_DIR}/nginx/data/logs:/var/log/nginx      
     ports:
       - 80:80
+    networks:
+      - net
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: irpam_pma
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8081:80
+
+################################################ redis
+  redis:
+    image: redis:6
+    container_name: irpam_redis
+    restart: always
+    command: redis-server --requirepass $REDIS_PASSWORD --loglevel warning --maxmemory-policy allkeys-lru
+    environment:
+      REDIS_PORT: $REDIS_PORT
+      REDIS_PASSWORD: $REDIS_PASSWORD
+    healthcheck:
+      test: "redis-cli -h 127.0.0.1 -p $$REDIS_PORT -a $$REDIS_PASSWORD info Replication"
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    volumes:
+      - redis-data:/data
+    networks:
+      - net
+
+################################################ mysql
+  mysql:
+    image: mariadb:10.6
+    container_name: irpam_mysql
+    restart: always
+    command: --character-set-server=utf8 --collation-server=utf8_general_ci
+    environment:
+      DB_PORT: $DB_PORT
+      MARIADB_ROOT_PASSWORD: $DB_PASSWORD
+      MARIADB_DATABASE: $DB_NAME
+    healthcheck:
+      test: "mysql -h127.0.0.1 -P$$DB_PORT -uroot -p$$MARIADB_ROOT_PASSWORD -e 'SHOW DATABASES;'"
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    volumes:
+      - mysql-data:/var/lib/mysql
     networks:
       - net
 
@@ -144,7 +203,8 @@ volumes:
   core-data:
   koko-data:
   lion-data:
-  ui-data-css:
+  redis-data:
+  mysql-data:
 
 networks:
   net:

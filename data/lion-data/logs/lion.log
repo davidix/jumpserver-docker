@@ -1,2 +1,5 @@
 2021-12-19 03:38:45 main main.go [ERROR] Post "http://core:8080/api/v1/terminal/terminals/status/": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 2021-12-20 20:14:39 main main.go [ERROR] Post "http://core:8080/api/v1/terminal/terminals/status/": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2022-01-06 06:21:06 main main.go [ERROR] Post "http://core:8080/api/v1/terminal/terminals/status/": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2022-01-09 13:50:49 main main.go [ERROR] Post "http://core:8080/api/v1/terminal/terminals/status/": dial tcp 172.16.238.4:8080: connect: connection refused
+2022-01-09 13:51:19 main main.go [ERROR] Post "http://core:8080/api/v1/terminal/terminals/status/": dial tcp 172.16.238.4:8080: connect: connection refused
